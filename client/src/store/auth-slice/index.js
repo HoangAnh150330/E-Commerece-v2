@@ -39,6 +39,16 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const googleAuth = createAsyncThunk(
+  "/auth/google-auth",
+  async (token) => {
+    const response = await axios.post("http://localhost:5000/api/auth/google-auth", { token }, {
+      withCredentials: true,
+    });
+    return response.data;
+  }
+);
+
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
 
@@ -127,7 +137,21 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(googleAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(googleAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success;
+      })
+      .addCase(googleAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
       });
+      
   },
 });
 

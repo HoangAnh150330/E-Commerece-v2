@@ -86,7 +86,66 @@ const loginUser = async (req, res) => {
     });
   }
 };
+//Đăng nhập bằng google 
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client("268311004090-edli15qb3e6k05k4ri2ijlkt932afr7l.apps.googleusercontent.com"); // Thay thế bằng Client ID của bạn
 
+const googleAuth = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Xác thực token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: "268311004090-edli15qb3e6k05k4ri2ijlkt932afr7l.apps.googleusercontent.com", // Thay thế bằng Client ID của bạn
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    // Kiểm tra sự tồn tại của người dùng
+    let user = await User.findOne({ email });
+    if (!user) {
+      // Nếu người dùng không tồn tại, tạo tài khoản mới
+      user = new User({
+        userName: name,
+        email: email,
+        password: "", // Không cần mật khẩu cho tài khoản Google
+        role: "user", // Hoặc bất kỳ vai trò nào bạn muốn
+      });
+      await user.save();
+    }
+
+    // Tạo token JWT
+    const jwtToken = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+        email: user.email,
+        userName: user.userName,
+      },
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "60m" }
+    );
+
+    res.cookie("token", jwtToken, { httpOnly: true, secure: false }).json({
+      success: true,
+      message: "Đăng nhập thành công",
+      user: {
+        email: user.email,
+        role: user.role,
+        id: user._id,
+        userName: user.userName,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra khi xác thực Google",
+    });
+  }
+};
 //đăng xuất
 
 const logoutUser = (req, res) => {
@@ -117,4 +176,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware,googleAuth  };

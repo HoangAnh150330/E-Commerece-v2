@@ -1,11 +1,10 @@
 import Address from "@/components/shopping-view/address";
 import img from "../../assets/account.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
+import UserCartItemsContent from "@/components/shopping-view/cart-items-content"; // Đảm bảo import đúng
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createNewOrder } from "@/store/shop/order-slice";
-import { Navigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 function ShoppingCheckout() {
@@ -13,11 +12,9 @@ function ShoppingCheckout() {
   const { user } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
-  const [isPaymentStart, setIsPaymemntStart] = useState(false);
+  const [isPaymentStart, setIsPaymentStart] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
-
-  console.log(currentSelectedAddress, "cartItems");
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
@@ -32,13 +29,12 @@ function ShoppingCheckout() {
         )
       : 0;
 
-  function handleInitiatePaypalPayment() {
+  function handleInitiateVNPayPayment() {
     if (cartItems.length === 0) {
       toast({
         title: "Giỏ hàng của bạn trống. Vui lòng thêm mặt hàng để tiếp tục",
         variant: "destructive",
       });
-
       return;
     }
     if (currentSelectedAddress === null) {
@@ -46,7 +42,6 @@ function ShoppingCheckout() {
         title: "Vui lòng chọn một địa chỉ để tiếp tục.",
         variant: "destructive",
       });
-
       return;
     }
 
@@ -72,7 +67,7 @@ function ShoppingCheckout() {
         notes: currentSelectedAddress?.notes,
       },
       orderStatus: "pending",
-      paymentMethod: "paypal",
+      paymentMethod: "vnpay", // Cập nhật phương thức thanh toán
       paymentStatus: "pending",
       totalAmount: totalCartAmount,
       orderDate: new Date(),
@@ -82,17 +77,13 @@ function ShoppingCheckout() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "sangam");
       if (data?.payload?.success) {
-        setIsPaymemntStart(true);
+        // Chuyển hướng đến URL thanh toán VNPay
+        window.location.href = data.payload.paymentUrl; // Giả sử bạn đã trả về paymentUrl từ backend
       } else {
-        setIsPaymemntStart(false);
+        setIsPaymentStart(false);
       }
     });
-  }
-
-  if (approvalURL) {
-    window.location.href = approvalURL;
   }
 
   return (
@@ -108,7 +99,7 @@ function ShoppingCheckout() {
         <div className="flex flex-col gap-4">
           {cartItems && cartItems.items && cartItems.items.length > 0
             ? cartItems.items.map((item) => (
-                <UserCartItemsContent cartItem={item} />
+                <UserCartItemsContent CartItemsContent key={item.productId} cartItem={item} />
               ))
             : null}
           <div className="mt-8 space-y-4">
@@ -118,10 +109,10 @@ function ShoppingCheckout() {
             </div>
           </div>
           <div className="mt-4 w-full">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
+            <Button onClick={handleInitiateVNPayPayment} className="w-full">
               {isPaymentStart
-                ? "Đang xử lý thanh toán Paypal..."
-                : "Thanh toán bằng Paypal"}
+                ? "Đang xử lý thanh toán VNPay..."
+                : "Thanh toán bằng VNPay"}
             </Button>
           </div>
         </div>

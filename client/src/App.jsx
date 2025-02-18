@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
-import PaypalReturnPage from "./pages/shopping-view/paypal-return";
+import PaypalReturnPage from "./pages/shopping-view/Payment-ReturnPage";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
 

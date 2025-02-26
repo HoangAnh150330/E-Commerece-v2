@@ -104,7 +104,7 @@ const capturePayment = async (req, res) => {
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: "Không thể tìm thấy đơn hàng",
+        message: "Không tìm thấy đơn hàng",
       });
     }
 
@@ -135,7 +135,7 @@ const capturePayment = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Đơn hàng đã được xác nhận",
+      message: "Đơn hàng đã xác nhận",
       data: order,
     });
   } catch (e) {

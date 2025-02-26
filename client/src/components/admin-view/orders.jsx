@@ -41,18 +41,18 @@ function AdminOrdersView() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tất cả đơn hàng</CardTitle>
+        <CardTitle>Tất cả các đơn hàng</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Mã đơn hàng</TableHead>
-              <TableHead>Ngày đặt hàng</TableHead>
-              <TableHead>Trạng thái đơn hàng</TableHead>
-              <TableHead>Giá trị đơn hàng</TableHead>
+              <TableHead>Mã đơn hàng</TableHead>
+              <TableHead>Ngày đặt hàng</TableHead>
+              <TableHead>Trạng thái đơn hàng</TableHead>
+              <TableHead>Giá đặt hàng</TableHead>
               <TableHead>
-                <span className="sr-only">Chi tiết</span>
+                <span className="sr-only">Chi tiết</span>
               </TableHead>
             </TableRow>
           </TableHeader>

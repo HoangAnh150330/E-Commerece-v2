@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation  } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
@@ -29,7 +29,7 @@ function App() {
     (state) => state.auth
   );
   const dispatch = useDispatch();
-
+  const location = useLocation();
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
@@ -37,7 +37,8 @@ function App() {
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
   console.log(isLoading, user);
-
+  const showFooter =
+    isAuthenticated && (location.pathname.startsWith("/shop"));
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
@@ -93,7 +94,7 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer/>
+      {showFooter && <Footer />}
     </div>
   );
 }

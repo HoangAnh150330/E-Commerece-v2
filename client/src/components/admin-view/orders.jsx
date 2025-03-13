@@ -59,7 +59,7 @@ function AdminOrdersView() {
           <TableBody>
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
-                  <TableRow>
+                  <TableRow key={orderItem._id}> {/* Add key prop here */}
                     <TableCell>{orderItem?._id}</TableCell>
                     <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
@@ -75,7 +75,7 @@ function AdminOrdersView() {
                         {orderItem?.orderStatus}
                       </Badge>
                     </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
+                    <TableCell>{orderItem?.totalAmount}.000 VNĐ</TableCell>
                     <TableCell>
                       <Dialog
                         open={openDetailsDialog}
@@ -97,7 +97,7 @@ function AdminOrdersView() {
                   </TableRow>
                 ))
               : null}
-          </TableBody>
+</TableBody>
         </Table>
       </CardContent>
     </Card>

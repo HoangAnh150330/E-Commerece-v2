@@ -88,7 +88,7 @@ const loginUser = async (req, res) => {
 };
 //Đăng nhập bằng google 
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client("268311004090-edli15qb3e6k05k4ri2ijlkt932afr7l.apps.googleusercontent.com"); // Thay thế bằng Client ID của bạn
+const client = new OAuth2Client("717123618454-qg4f63hq5tqimuitp7186s6koq0u6jpf.apps.googleusercontent.com"); // Thay thế bằng Client ID của bạn
 
 const googleAuth = async (req, res) => {
   const { token } = req.body;
@@ -97,7 +97,7 @@ const googleAuth = async (req, res) => {
     // Xác thực token
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: "268311004090-edli15qb3e6k05k4ri2ijlkt932afr7l.apps.googleusercontent.com", // Thay thế bằng Client ID của bạn
+      audience: "717123618454-qg4f63hq5tqimuitp7186s6koq0u6jpf.apps.googleusercontent.com", // Thay thế bằng Client ID của bạn
     });
 
     const payload = ticket.getPayload();

@@ -76,6 +76,8 @@ function AdminProducts() {
             setFormData(initialFormData);
             toast({
               title: "Sản phẩm thêm thành công",
+              variant:"default",
+              className:"bg-green-500 text-white"
             });
           }
         });

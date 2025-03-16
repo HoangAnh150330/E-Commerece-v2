@@ -77,6 +77,16 @@ function ShoppingHome() {
   }
 
   function handleAddtoCart(getCurrentProductId) {
+    if (!user) {
+      toast.warning("Bạn cần đăng nhập để mua hàng!",{
+        action:(
+          <Button onClick={() => navigate("/auth/login")} variant="outline">
+            Đăng nhập
+          </Button>
+        ),
+      })
+      return;
+    }
     dispatch(
       addToCart({
         userId: user?.id,
@@ -88,6 +98,8 @@ function ShoppingHome() {
         dispatch(fetchCartItems(user?.id));
         toast({
           title: "Sản phẩm đã được thêm vào giỏ hàng",
+          variant:"default",
+          className:"bg-green-500 text-white"
         });
       }
     });

@@ -44,13 +44,10 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <CheckAuth
-              isAuthenticated={isAuthenticated}
-              user={user}
-            ></CheckAuth>
-          }
-        />
+          element={<ShoppingLayout /> }
+        >
+          <Route index element={<ShoppingHome/>}/>
+        </Route>
         <Route
           path="/auth"
           element={
@@ -78,15 +75,21 @@ function App() {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
-            </CheckAuth>
           }
         >
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
-          <Route path="checkout" element={<ShoppingCheckout />} />
-          <Route path="account" element={<ShoppingAccount />} />
+          <Route path="checkout" element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShoppingCheckout />
+            </CheckAuth>}
+            />
+          <Route path="account" element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}> 
+              <ShoppingAccount />
+            </CheckAuth>
+            } />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />

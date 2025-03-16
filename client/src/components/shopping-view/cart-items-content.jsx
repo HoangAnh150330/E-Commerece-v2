@@ -54,6 +54,8 @@ function UserCartItemsContent({ cartItem }) {
       if (data?.payload?.success) {
         toast({
           title: "Cập nhật giỏ hàng thành công",
+          variant:"default",
+          className:"bg-green-500 text-white"
         });
       }
     });
@@ -66,6 +68,8 @@ function UserCartItemsContent({ cartItem }) {
       if (data?.payload?.success) {
         toast({
           title: "Xóa sản phẩm khỏi giỏ hàng thành công",
+          variant:"default",
+          className:"bg-green-500 text-white"
         });
       }
     });

@@ -59,6 +59,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         dispatch(fetchCartItems(user?.id));
         toast({
           title: "Sản phẩm đã được thêm vào giỏ hàng",
+          variant:"default"
         });
       }
     });
@@ -87,6 +88,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         dispatch(getReviews(productDetails?._id));
         toast({
           title: "Đánh giá đã được thêm thành công!",
+          variant:"default",
+          className:"bg-green-500 text-white"
         });
       }
     });

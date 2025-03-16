@@ -55,6 +55,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
             setFormData(initialAddressFormData);
             toast({
               title: "Cập nhật địa chỉ thành công",
+              variant:"default",
+              className:"bg-green-500 text-white"
             });
           }
         })
@@ -69,6 +71,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
             setFormData(initialAddressFormData);
             toast({
               title: "Thêm địa chỉ thành công",
+              variant:"default",
+              className:"bg-green-500 text-white"
             });
           }
         });
@@ -82,6 +86,8 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
         dispatch(fetchAllAddresses(user?.id));
         toast({
           title: "Xóa địa chỉ thành công",
+          variant:"default",
+          className:"bg-green-500 text-white"
         });
       }
     });

@@ -26,7 +26,7 @@ function AdminProductTile({
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              ${product?.price}
+              {product?.price}.000 VNĐ
             </span>
             {product?.salePrice > 0 ? (
               <span className="text-lg font-bold">{product?.salePrice}.000 VNĐ</span>
